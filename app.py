@@ -18,7 +18,7 @@ def load_data():
 
 df, df_area = load_data()
 
-st.title("Mumbai & Navi Mumbai Real Estate Explorer — v2")
+st.title("Mumbai & Navi Mumbai Real Estate Explorer")
 st.caption("Data scraped from MagicBricks — 1,859 listings across Mumbai & Navi Mumbai")
 st.markdown("---")
 
