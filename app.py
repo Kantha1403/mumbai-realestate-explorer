@@ -9,7 +9,9 @@ st.set_page_config(
 
 @st.cache_data(ttl=0)
 def load_data():
-    df = pd.read_csv("mumbai_realestate_master.csv")
+    import os
+    csv_path = os.path.join(os.path.dirname(__file__), "mumbai_realestate_master.csv")
+    df = pd.read_csv(csv_path)
     df_area = df.dropna(subset=["area_sqft"]).copy()
     df_area["price_per_sqft"] = (df_area["price"] / df_area["area_sqft"]).round(0)
     return df, df_area
