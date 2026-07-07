@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 st.set_page_config(
     page_title="Mumbai Real Estate Explorer",
@@ -9,8 +10,7 @@ st.set_page_config(
 
 @st.cache_data(ttl=0)
 def load_data():
-    import os
-    csv_path = os.path.join(os.path.dirname(__file__), "mumbai_realestate_master.csv")
+    csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "mumbai_realestate_master.csv")
     df = pd.read_csv(csv_path)
     df_area = df.dropna(subset=["area_sqft"]).copy()
     df_area["price_per_sqft"] = (df_area["price"] / df_area["area_sqft"]).round(0)
@@ -18,7 +18,7 @@ def load_data():
 
 df, df_area = load_data()
 
-st.title("Mumbai & Navi Mumbai Real Estate Explorer")
+st.title("Mumbai & Navi Mumbai Real Estate Explorer — v2")
 st.caption("Data scraped from MagicBricks — 1,859 listings across Mumbai & Navi Mumbai")
 st.markdown("---")
 
