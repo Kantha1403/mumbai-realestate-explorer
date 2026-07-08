@@ -207,7 +207,7 @@ else:
             "city"           : "City",
             "developer"      : "Developer",
             "possession"     : "Possession",
-            "nearest_railway": "Nearest Railway/Metro Station"
+            "nearest_railway": "Nearest Station"
         }),
         use_container_width=True,
         hide_index=True
