@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -18,7 +19,7 @@ def load_data():
 
 df, df_area = load_data()
 
-st.title("Mumbai & Navi Mumbai Real Estate Explorer")
+st.title("Mumbai & Navi Mumbai Real Estate Explorer — v2")
 st.caption("Data scraped from MagicBricks — 1,859 listings across Mumbai & Navi Mumbai")
 st.markdown("---")
 
@@ -205,7 +206,7 @@ else:
             "city"           : "City",
             "developer"      : "Developer",
             "possession"     : "Possession",
-            "nearest_railway": "Nearest Railway"
+            "nearest_railway/metro_station": "Nearest Railway"
         }),
         use_container_width=True,
         hide_index=True
