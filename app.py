@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -198,15 +197,17 @@ else:
     st.subheader("All Listings")
     display_cols = ["bhk", "price_fmt", "locality", "city",
                     "developer", "possession", "nearest_railway"]
+    display_df = filtered[display_cols].copy()
+    display_df["nearest_railway"] = display_df["nearest_railway"].str.split("|").str[0].str.strip()
     st.dataframe(
-        filtered[display_cols].rename(columns={
+        display_df.rename(columns={
             "bhk"            : "BHK",
             "price_fmt"      : "Price",
             "locality"       : "Locality",
             "city"           : "City",
             "developer"      : "Developer",
             "possession"     : "Possession",
-            "nearest_railway/metro_station": "Nearest Railway"
+            "nearest_railway": "Nearest Railway/Metro Station"
         }),
         use_container_width=True,
         hide_index=True
