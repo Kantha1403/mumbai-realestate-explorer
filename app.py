@@ -21,18 +21,30 @@ def load_data():
     return df, df_area
 
 @st.cache_resource
-def load_model():
-    base = os.path.dirname(os.path.abspath(__file__))
-    with open(os.path.join(base, "price_model.pkl"), "rb") as f:
-        model = pickle.load(f)
-    with open(os.path.join(base, "le_locality.pkl"), "rb") as f:
-        le_locality = pickle.load(f)
-    with open(os.path.join(base, "le_city.pkl"), "rb") as f:
-        le_city = pickle.load(f)
+def load_model(_df):
+    from sklearn.ensemble import RandomForestRegressor
+    from sklearn.preprocessing import LabelEncoder
+    import numpy as np
+
+    model_data = _df.dropna(subset=["bhk", "area_sqft", "locality", "city", "price"]).copy()
+    p99 = model_data["price"].quantile(0.99)
+    model_data = model_data[model_data["price"] <= p99]
+
+    le_locality = LabelEncoder()
+    le_city = LabelEncoder()
+    model_data["locality_encoded"] = le_locality.fit_transform(model_data["locality"])
+    model_data["city_encoded"]     = le_city.fit_transform(model_data["city"])
+
+    X = model_data[["bhk", "area_sqft", "locality_encoded", "city_encoded"]]
+    y = model_data["price"]
+
+    model = RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1)
+    model.fit(X, y)
+
     return model, le_locality, le_city
 
 df, df_area = load_data()
-model, le_locality, le_city = load_model()
+model, le_locality, le_city = load_model(df)
 
 st.title("Mumbai & Navi Mumbai Real Estate Explorer")
 st.caption("Data scraped from MagicBricks — 1,859 listings across Mumbai & Navi Mumbai")
