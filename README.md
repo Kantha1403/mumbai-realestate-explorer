@@ -7,7 +7,8 @@ An end-to-end data analysis project that scrapes live apartment listings from Ma
 - Scrapes 1,859 real apartment listings across Mumbai and Navi Mumbai from MagicBricks
 - Extracts price, BHK type, locality, area, developer, possession date, and nearby facilities
 - Cleans and analyzes data to calculate price per sq ft by locality
-- Serves an interactive Streamlit dashboard where users can filter by city, locality, and BHK type
+- Trains a Random Forest model to predict apartment prices
+- Serves an interactive Streamlit dashboard with filters, charts, and price prediction
 
 ## Key Findings
 
@@ -16,18 +17,30 @@ An end-to-end data analysis project that scrapes live apartment listings from Ma
 - Kharghar sits at Rs 13,325 per sq ft — premium but with strong infrastructure
 - Vashi and Seawoods are the most expensive at Rs 31,000+ per sq ft
 
+## Price Prediction Model
+
+- Algorithm: Random Forest Regressor (100 estimators)
+- Training data: 986 listings with area, BHK, locality, and city
+- R2 Score: 0.829 (model explains 83% of price variance)
+- Mean Absolute Error: Rs 78L
+- Features: area sqft (80% importance), locality (10%), city (6%), BHK (3.5%)
+
 ## Tech Stack
 
 - Scraping: Python, requests, BeautifulSoup, re (regex)
 - Analysis: pandas, numpy
+- Machine Learning: scikit-learn (Random Forest)
 - Visualization: matplotlib, seaborn
 - App: Streamlit
 
 ## Project Structure
 
-- app.py — Streamlit dashboard
-- real_estate_project_clean.ipynb — Full analysis notebook
+- app.py — Streamlit dashboard with price prediction
+- real_estate_project_v2.ipynb — Full analysis notebook (Part 1 + Part 2)
 - mumbai_realestate_master.csv — Scraped dataset (1,859 listings)
+- price_model.pkl — Trained Random Forest model
+- le_locality.pkl — Locality label encoder
+- le_city.pkl — City label encoder
 - requirements.txt — Python dependencies
 
 ## How to Run Locally
@@ -44,12 +57,13 @@ streamlit run app.py
 ## Dashboard Features
 
 - Filter by city (Mumbai / Navi Mumbai / Both)
-- Filter by locality and BHK type
-- Key metrics: total listings, median price, cheapest, most expensive
+- Filter by locality, BHK type, budget range, and possession status
+- Key metrics: total listings, median price, cheapest, most expensive, avg price per sqft, most common BHK
 - Price by BHK chart and price distribution chart
 - Price per sq ft comparison table across localities
 - Nearby railway stations, hospitals, and supermarkets
 - Top developers and full listings table
+- Price prediction — enter city, locality, BHK, and area to get an estimated price
 
 ## Data Source
 
